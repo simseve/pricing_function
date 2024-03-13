@@ -98,11 +98,11 @@ st.write(f"Pricing: Eur {y_val:,.0f}")
 
 # Plotting
 fig, ax = plt.subplots()
-ax.scatter(x_data, y_data, color='red', label='Data Points')
+ax.scatter(x_data, y_data, color='red', label='Benchmark Points')
 ax.plot(np.linspace(min_x, max_x, 400), log_func(np.linspace(
-    min_x, max_x, 400), *params), label='Fitted Logarithmic Curve', color='green')
+    min_x, max_x, 400), *params), label='Pricing function', color='green')
 ax.scatter([adjusted_x_val], [y_val], color='blue', zorder=5,
-           s=100, edgecolor='black', label='Selected Pricing Point')
+           s=100, edgecolor='black', label='Pricing Point = f(# apps)')
 
 # Add dashed lines for each x coordinate
 for x in x_data:
