@@ -57,9 +57,9 @@ default_x_val = 500  # Example default starting value
 # Create buttons for decrementing/incrementing
 col1, col2, col3 = st.columns([1, 1, 10])
 with col1:
-    decrement = st.button('-')
+    decrement = st.button('--')
 with col2:
-    increment = st.button('+')
+    increment = st.button('++')
 
 # Session state to store and update the current value
 if 'x_val' not in st.session_state:
@@ -84,13 +84,14 @@ st.session_state.x_val = x_val
 current_step = find_step_size(x_val, steps)
 
 # Adjust x_val to align with the nearest higher multiple of the current step size
-if x_val == 1:
-    adjusted_x_val = x_val
-else:
-    adjusted_x_val = x_val + (current_step - x_val % current_step) % current_step
+
+adjusted_x_val = x_val + (current_step - x_val % current_step) % current_step
 
 # Compute the interpolated y-value
-y_val = log_func(adjusted_x_val, *params)
+if x_val == 1:
+    y_val = y_data[0]
+else:
+    y_val = log_func(adjusted_x_val, *params)
 
 # Display the adjusted x_val and corresponding y_val
 st.write(f"Adjusted # of apps: {adjusted_x_val}")
