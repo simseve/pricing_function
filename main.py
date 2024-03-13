@@ -84,7 +84,10 @@ st.session_state.x_val = x_val
 current_step = find_step_size(x_val, steps)
 
 # Adjust x_val to align with the nearest higher multiple of the current step size
-adjusted_x_val = x_val + (current_step - x_val % current_step) % current_step
+if x_val == 1:
+    adjusted_x_val = x_val
+else:
+    adjusted_x_val = x_val + (current_step - x_val % current_step) % current_step
 
 # Compute the interpolated y-value
 y_val = log_func(adjusted_x_val, *params)
