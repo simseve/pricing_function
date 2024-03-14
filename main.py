@@ -13,12 +13,18 @@ st.title("Pricing Function by Number of Apps")
 default_values = [(1, 15000), (20, 75000), (50, 150000), (100, 250000), (1000, 1000000)]
 coordinates = []
 
+col1, col2 = st.columns(2)
+with col1:
+    st.write("Number of AI apps")
+with col2:
+    st.write("Price (Eur)")
+
 # Creating input fields for x and y with default values
 for i, (default_x, default_y) in enumerate(default_values):
-    col1, col2 = st.columns(2)
-    with col1:
+    col3, col4 = st.columns(2)
+    with col3:
         x = st.number_input(f"X{i}", value=default_x)
-    with col2:
+    with col4:
         y = st.number_input(f"Y{i}", value=default_y)
     coordinates.append((x, y))
 
