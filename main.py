@@ -12,8 +12,8 @@ def log_func(x, a, b, c=1):
 st.title("Pricing function by number of apps")
 
 # Initialize default values
-default_values = [(1, 15000, 1), (10, 70000, 5),
-                  (100, 300000, 10), (1000, 600000, 20)]
+default_values = [(1, 15000, 1), (5, 35000, 5),
+                  (50, 200000, 50), (1000, 700000, 500), (10000, 2500000, 500)]
 coordinates = []
 steps = []
 
@@ -25,7 +25,7 @@ for i, (default_x, default_y, default_step) in enumerate(default_values):
     with col2:
         y = st.number_input(f"Y{i}", value=default_y)
     with col3:
-        if i < 3:
+        if i < 4:
             step = st.number_input(
                 f"Step Size for X{i}", value=default_step, min_value=1)
     coordinates.append((x, y))
@@ -51,7 +51,7 @@ def find_step_size(x_val, steps):
 min_x, max_x = min(x_data), max(x_data)
 
 # Assuming min_x, max_x, and a default value for x_val have been defined
-min_x, max_x = 1, 1000  # Example range
+min_x, max_x = 1, 10000  # Example range
 default_x_val = 500  # Example default starting value
 
 # Create buttons for decrementing/incrementing
