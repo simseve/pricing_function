@@ -13,7 +13,7 @@ st.title("Pricing function by number of apps")
 
 # Initialize default values
 default_values = [(1, 15000, 1), (20, 75000, 1),
-                  (50, 150000, 1), (100, 250000, 1), (10000, 1000000, 1)]
+                  (50, 150000, 1), (100, 250000, 1), (1000, 1000000, 1)]
 coordinates = []
 steps = []
 
