@@ -12,8 +12,8 @@ def log_func(x, a, b, c=1):
 st.title("Pricing function by number of apps")
 
 # Initialize default values
-default_values = [(1, 15000, 1), (5, 35000, 5),
-                  (50, 200000, 50), (1000, 700000, 500), (10000, 2500000, 500)]
+default_values = [(1, 15000, 1), (20, 75000, 1),
+                  (50, 150000, 1), (100, 250000, 1), (10000, 1000000, 1)]
 coordinates = []
 steps = []
 
