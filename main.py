@@ -6,6 +6,28 @@ import matplotlib.pyplot as plt
 def log_func(x, a, b, c=1):
     return a + b * np.log(x + c)  # Ensure x + c > 0 for log calculation
 
+
+def get_y_val_for_x(x_val, default_values):
+    # Iterate through each tuple in the default_values list
+    for x, y in default_values:
+        # Check if the current x matches x_val
+        if x == x_val:
+            # If a match is found, return the corresponding y value
+            return y
+    # If no match is found, indicate that x_val does not match any default value
+    return False
+
+def get_upper_value(x_val, default_values):
+    # Iterate through each tuple in the default_values list
+    for x, y in default_values:
+        # Check if the current x is greater than x_val
+        if x >= x_val:
+            # If a match is found, return the corresponding y value
+            return x, y
+    # If no match is found, indicate that x_val does not match any default value
+    return False
+
+
 # Streamlit app setup
 st.title("Pricing Function by Number of Apps")
 
@@ -35,16 +57,24 @@ params, _ = curve_fit(log_func, x_data, y_data)
 
 # Slider for selecting # of apps
 min_x, max_x = 1, 10000  # Example range for slider
-default_x_val = 500  # Example default starting value for slider
+default_x_val = 100  # Example default starting value for slider
 
 x_val = st.number_input("Select # of apps", min_value=min_x, max_value=max_x, value=default_x_val, step=1)
 
+adjusted_xval, adjusted_yval = get_upper_value(x_val, default_values)
+
+
 # Compute the interpolated y-value using the selected x_val
 y_val = log_func(x_val, *params)
+# adjusted_xval, adjusted_yval = get_y_val_for_x(adjusted_xval, default_values)
+
 
 # Display the selected x_val and corresponding y_val
-st.write(f"Selected # of apps: {x_val}")
-st.write(f"Pricing: Eur {y_val:,.0f}")
+st.write(f"Estimated Pricing: Eur {y_val:,.0f}")
+
+st.markdown(f"### Adjusted # of apps: **{adjusted_xval}**")
+st.markdown(f"### Final Pricing: Eur **{adjusted_yval:,.0f}**")
+
 
 # Plotting
 fig, ax = plt.subplots()
