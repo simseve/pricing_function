@@ -7,25 +7,24 @@ def log_func(x, a, b, c=1):
     return a + b * np.log(x + c)  # Ensure x + c > 0 for log calculation
 
 
-def get_y_val_for_x(x_val, default_values):
-    # Iterate through each tuple in the default_values list
-    for x, y in default_values:
-        # Check if the current x matches x_val
-        if x == x_val:
-            # If a match is found, return the corresponding y value
-            return y
-    # If no match is found, indicate that x_val does not match any default value
-    return False
+# def get_y_val_for_x(x_val, default_values):
+#     # Iterate through each tuple in the default_values list
+#     for x, y in default_values:
+#         # Check if the current x matches x_val
+#         if x == x_val:
+#             # If a match is found, return the corresponding y value
+#             return y
+#     # If no match is found, indicate that x_val does not match any default value
+#     return False
 
-def get_upper_value(x_val, default_values):
-    # Iterate through each tuple in the default_values list
-    for x, y in default_values:
-        # Check if the current x is greater than x_val
+def get_upper_value(x_val, x_data, y_data):
+    # If x_val is greater than all x_data points, return the last point
+    if x_val >= max(x_data):
+        return x_data[-1], y_data[-1]
+    # Otherwise, find the first x point that is greater than or equal to x_val
+    for i, x in enumerate(x_data):
         if x >= x_val:
-            # If a match is found, return the corresponding y value
-            return x, y
-    # If no match is found, indicate that x_val does not match any default value
-    return False
+            return x, y_data[i]
 
 
 # Streamlit app setup
@@ -61,7 +60,7 @@ default_x_val = 100  # Example default starting value for slider
 
 x_val = st.number_input("Select # of apps", min_value=min_x, max_value=max_x, value=default_x_val, step=1)
 
-adjusted_xval, adjusted_yval = get_upper_value(x_val, default_values)
+adjusted_xval, adjusted_yval = get_upper_value(x_val, x_data, y_data)
 
 
 # Compute the interpolated y-value using the selected x_val
@@ -72,9 +71,11 @@ y_val = log_func(x_val, *params)
 # Display the selected x_val and corresponding y_val
 st.write(f"Estimated Pricing: Eur {y_val:,.0f}")
 
-st.markdown(f"### Adjusted # of apps: **{adjusted_xval}**")
-st.markdown(f"### Final Pricing: Eur **{adjusted_yval:,.0f}**")
 
+# Check if a valid upper value was found
+if adjusted_xval and adjusted_yval:
+    st.markdown(f"### Adjusted # of apps: **{adjusted_xval}**")
+    st.markdown(f"### Final Pricing: Eur **{adjusted_yval:,.0f}**")
 
 # Plotting
 fig, ax = plt.subplots()
