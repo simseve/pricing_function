@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  pricingfunction:
+    image: pricingfunction
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
